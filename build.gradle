@@ -19,6 +19,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
+    implementation('org.yaml:snakeyaml:2.2')
 }
 
 def targetJavaVersion = 21
