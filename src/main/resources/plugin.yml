@@ -1,0 +1,4 @@
+name: EconomyPlugin
+version: '1.0-SNAPSHOT'
+main: sqidy.economyPlugin.EconomyPlugin
+api-version: '1.21'
