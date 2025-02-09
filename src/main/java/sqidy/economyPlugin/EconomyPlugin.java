@@ -23,8 +23,16 @@ public final class EconomyPlugin extends JavaPlugin {
         //  Handlers
         FileHandler.setup();
 
-        // Sqidy is poor so he doesn't get any money
-        FileHandler.appendNewAccount("UUID", "sqidys", "0.00", accountsDir);
+        //region Debugging
+        // Add account
+        FileHandler.modifyAccountData("TestUUID", "0.00", true);
+        FileHandler.modifyAccountData("TestUUIDTwo", "0.00", true);
+        // Add x float amount to x user (/pay <amount> <optional IGN>)
+        FileHandler.addToBalance("TestUUID", 0.303F);
+        FileHandler.addToBalance("TestUUIDTwo", 21.03F);
+        // Sets a player's balance (/setBal <IGN> <amount>)
+        FileHandler.modifyAccountData("TestUUIDTwo", "50.00", false);
+        //endregion
     }
 
     @Override

@@ -4,14 +4,13 @@ import org.bukkit.Bukkit;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 public class FileHandler {
     //region Variables
+    public static HashMap<String, HashMap<String, String>> data;
+
     static String configDir = "./plugins/EconomyPlugin/config.yml";
     static public String accountsDir = "./plugins/EconomyPlugin/accounts.yml";
 
@@ -24,6 +23,8 @@ public class FileHandler {
     public static void setup(){
         createDirectory();
         createFiles();
+
+        loadDataFromYAML(accountsDir);
     }
 
     private static void createDirectory() {
@@ -71,10 +72,7 @@ public class FileHandler {
     }
     //endregion
 
-
-
-    //region Loading and appending data
-    public static HashMap<String, HashMap<String, String>> loadDataFromAccounts(String filePath){
+    public static HashMap<String, HashMap<String, String>> loadDataFromYAML(String filePath){
         //region Returns the info in yml file.
         Yaml yaml = new Yaml();
 
@@ -86,30 +84,48 @@ public class FileHandler {
         //endregion
     }
 
-    public static void appendNewAccount(String uuid, String playerName, String balance, String filePath) {
-        //region Formats player data
-        HashMap<String, HashMap<String, String>> data = new HashMap<>();
+    public static void modifyAccountData(String uuid, String balance, boolean appendAccount){
+        //region Check for append
+        if (!appendAccount){
+            data = loadDataFromYAML(accountsDir);
+        } else {
+            data = new HashMap<>();
+        }
+        //endregion
 
+        //region The data of the UUID
         HashMap<String, String> playerData = new HashMap<>();
+        String playerName = Bukkit.getPlayer(uuid).getName();
+
         playerData.put("player", playerName);
         playerData.put("balance", balance);
 
         data.put(uuid, playerData);
         //endregion
 
-        //region Appends it to accounts.yml
+        //region Write it to accounts.yml
         DumperOptions options = new DumperOptions();
         options.setIndent(2);
         options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
 
         Yaml yaml = new Yaml(options);
 
-        try (FileWriter writer = new FileWriter(filePath, true)) {
+        try(Writer writer = new FileWriter(accountsDir, appendAccount)) {
             yaml.dump(data, writer);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         //endregion
     }
-    //endregion
+
+    public static void addToBalance(String uuid, float amount){
+        //region Get data, make sure it's only ~.xx, then modify it in accounts.yml
+        HashMap<String, HashMap<String, String>> data = loadDataFromYAML(accountsDir);
+
+        float currentBalance = Float.parseFloat(data.get(uuid).get("balance"));
+        String newBalance = String.format("%.2f", (currentBalance + amount));
+
+        modifyAccountData(uuid, newBalance, false);
+        //endregion
+    }
 }
