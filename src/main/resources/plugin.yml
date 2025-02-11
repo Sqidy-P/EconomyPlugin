@@ -2,3 +2,30 @@ name: EconomyPlugin
 version: '1.0-SNAPSHOT'
 main: sqidy.economyPlugin.EconomyPlugin
 api-version: '1.21'
+commands:
+  balance:
+    usage: /balance <give/take/see> <IGN> <amount>
+    aliases: [money, bal]
+  pay:
+    usage: /pay <IGN>
+  baltop:
+    usage: /baltop
+
+permissions:
+  economy.*:
+    children:
+      economy.give: true
+      economy.take: true
+      economy.see: true
+      economy.pay: true
+      economy.baltop: true
+  economy.give:
+    default: op
+  economy.take:
+    default: op
+  economy.see:
+    default: op
+  economy.pay:
+    default: true
+  economy.baltop:
+    default: true
