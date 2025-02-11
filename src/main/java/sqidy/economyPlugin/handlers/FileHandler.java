@@ -72,6 +72,8 @@ public class FileHandler {
     }
     //endregion
 
+    
+
     public static HashMap<String, HashMap<String, String>> loadDataFromYAML(String filePath){
         //region Returns the info in yml file.
         Yaml yaml = new Yaml();
@@ -84,7 +86,7 @@ public class FileHandler {
         //endregion
     }
 
-    public static void modifyAccountData(String uuid, String balance, boolean appendAccount){
+    public static void modifyAccountData(String uuid, String playerName, String balance, boolean appendAccount){
         //region Check for append
         if (!appendAccount){
             data = loadDataFromYAML(accountsDir);
@@ -95,9 +97,10 @@ public class FileHandler {
 
         //region The data of the UUID
         HashMap<String, String> playerData = new HashMap<>();
-        String playerName = Bukkit.getPlayer(uuid).getName();
+//        String playerName = Bukkit.getServer().getPlayer(uuid).getName();
+//        String playerName = "Name Placeholder";
 
-        playerData.put("player", playerName);
+         playerData.put("player", playerName);
         playerData.put("balance", balance);
 
         data.put(uuid, playerData);
@@ -118,14 +121,18 @@ public class FileHandler {
         //endregion
     }
 
-    public static void addToBalance(String uuid, float amount){
+    public static void addToBalance(String uuid, String playerName, float amount){
         //region Get data, make sure it's only ~.xx, then modify it in accounts.yml
         HashMap<String, HashMap<String, String>> data = loadDataFromYAML(accountsDir);
 
         float currentBalance = Float.parseFloat(data.get(uuid).get("balance"));
         String newBalance = String.format("%.2f", (currentBalance + amount));
 
-        modifyAccountData(uuid, newBalance, false);
+        modifyAccountData(uuid, playerName, newBalance, false);
         //endregion
+    }
+
+    public static String getBalance(String uuid){
+        return FileHandler.loadDataFromYAML(accountsDir).get(uuid).get("balance");
     }
 }
