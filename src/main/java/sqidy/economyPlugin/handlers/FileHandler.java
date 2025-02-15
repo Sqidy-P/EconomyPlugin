@@ -7,12 +7,11 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.*;
 import java.util.HashMap;
 
+import static sqidy.economyPlugin.utils.EconomyUtils.accountsDir;
+
 public class FileHandler {
     //region Variables
     public static HashMap<String, HashMap<String, String>> data;
-
-    static String configDir = "./plugins/EconomyPlugin/config.yml";
-    static public String accountsDir = "./plugins/EconomyPlugin/accounts.yml";
 
     static File directory = new File("./plugins", "EconomyPlugin");
     static File config = new File("./plugins/EconomyPlugin", "config.yml");
@@ -97,10 +96,8 @@ public class FileHandler {
 
         //region The data of the UUID
         HashMap<String, String> playerData = new HashMap<>();
-//        String playerName = Bukkit.getServer().getPlayer(uuid).getName();
-//        String playerName = "Name Placeholder";
 
-         playerData.put("player", playerName);
+        playerData.put("player", playerName);
         playerData.put("balance", balance);
 
         data.put(uuid, playerData);
@@ -119,20 +116,5 @@ public class FileHandler {
             throw new RuntimeException(e);
         }
         //endregion
-    }
-
-    public static void addToBalance(String uuid, String playerName, float amount){
-        //region Get data, make sure it's only ~.xx, then modify it in accounts.yml
-        HashMap<String, HashMap<String, String>> data = loadDataFromYAML(accountsDir);
-
-        float currentBalance = Float.parseFloat(data.get(uuid).get("balance"));
-        String newBalance = String.format("%.2f", (currentBalance + amount));
-
-        modifyAccountData(uuid, playerName, newBalance, false);
-        //endregion
-    }
-
-    public static String getBalance(String uuid){
-        return FileHandler.loadDataFromYAML(accountsDir).get(uuid).get("balance");
     }
 }
