@@ -1,7 +1,7 @@
 package sqidy.economyPlugin.utils;
 
 public class EconomyUtils {
-    static String configDir = "./plugins/EconomyPlugin/config.yml";
+    static public String configDir = "./plugins/EconomyPlugin/config.yml";
     static public String accountsDir = "./plugins/EconomyPlugin/accounts.yml";
 
     public static boolean isFloat(String str){
