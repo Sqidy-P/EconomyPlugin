@@ -15,10 +15,10 @@ public class BalanceHandler {
         HashMap<String, HashMap<String, String>> data = loadDataFromYAML(accountsDir);
 
         float currentBalance = Float.parseFloat(data.get(uuid).get("balance"));
-        String newBalance = String.format("%.2f", (currentBalance + amount));
+        float newBalance = Float.parseFloat(String.format("%.2f", (currentBalance + amount)));
 
-        if (Float.parseFloat(newBalance) <= 0.009){
-            newBalance = "0.00";
+        if (newBalance <= 0.009f){
+            newBalance = 0.00f;
         }
 
         modifyAccountData(uuid, playerName, newBalance, false);
@@ -26,6 +26,12 @@ public class BalanceHandler {
     }
 
 
+
+    public static void setBalance(String playerName, float amount){
+        String uuid = Bukkit.getOfflinePlayer(playerName).getUniqueId().toString();
+
+        modifyAccountData(uuid, playerName, amount, false);
+    }
 
     public static void addToBalance(String playerName, float amount){
         if (amount < -0.00){

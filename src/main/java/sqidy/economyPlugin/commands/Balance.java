@@ -32,6 +32,11 @@ public class Balance implements CommandExecutor {
                         takeFromBalance(targetPlayer, amount);
                         return true;
                     }
+                case "set":
+                    if (player.hasPermission("economy.set")){
+                        setBalance(targetPlayer, amount);
+                        return true;
+                    }
                 default:
                     return false;
             }
