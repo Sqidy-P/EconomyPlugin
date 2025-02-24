@@ -17,6 +17,7 @@ permissions:
       economy.give: true
       economy.take: true
       economy.see: true
+      economy.set: true
       economy.pay: true
       economy.baltop: true
   economy.give:
@@ -24,6 +25,8 @@ permissions:
   economy.take:
     default: op
   economy.see:
+    default: op
+  economy.set:
     default: op
   economy.pay:
     default: true
