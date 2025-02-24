@@ -5,8 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static sqidy.economyPlugin.handlers.BalanceHandler.addToBalance;
-import static sqidy.economyPlugin.handlers.BalanceHandler.takeFromBalance;
+import static sqidy.economyPlugin.handlers.BalanceHandler.*;
 import static sqidy.economyPlugin.utils.EconomyUtils.isFloat;
 
 public class Pay implements CommandExecutor {
@@ -21,6 +20,11 @@ public class Pay implements CommandExecutor {
         if (args.length == 2 && player.hasPermission("economy.pay") && isFloat(args[1])){
             float amount = Float.parseFloat(args[1]);
             String targetPlayer = args[0];
+            float currentBalance = Float.parseFloat(getBalance(player.getName()));
+
+            if (currentBalance < amount){
+                return false;
+            }
 
             addToBalance(targetPlayer, amount);
             takeFromBalance(player.getName(), amount);
