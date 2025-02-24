@@ -85,7 +85,7 @@ public class FileHandler {
         //endregion
     }
 
-    public static void modifyAccountData(String uuid, String playerName, String balance, boolean appendAccount){
+    public static void modifyAccountData(String uuid, String playerName, float balance, boolean appendAccount){
         //region Check for append
         if (!appendAccount){
             data = loadDataFromYAML(accountsDir);
@@ -98,7 +98,7 @@ public class FileHandler {
         HashMap<String, String> playerData = new HashMap<>();
 
         playerData.put("player", playerName);
-        playerData.put("balance", balance);
+        playerData.put("balance", String.valueOf(balance));
 
         data.put(uuid, playerData);
         //endregion

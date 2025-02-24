@@ -21,7 +21,7 @@ public class FirstJoinListener implements Listener {
         String playerName = player.getName();
 
         if (!player.hasPlayedBefore()){
-            FileHandler.modifyAccountData(UUID, playerName, "0.00", true);
+            FileHandler.modifyAccountData(UUID, playerName, 0.00f, true);
         }
     }
 }
