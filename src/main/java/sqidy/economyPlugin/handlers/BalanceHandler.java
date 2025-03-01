@@ -1,6 +1,7 @@
 package sqidy.economyPlugin.handlers;
 
 import org.bukkit.Bukkit;
+import sqidy.economyPlugin.utils.Config;
 
 import java.util.HashMap;
 
@@ -17,7 +18,8 @@ public class BalanceHandler {
         float currentBalance = Float.parseFloat(data.get(uuid).get("balance"));
         float newBalance = Float.parseFloat(String.format("%.2f", (currentBalance + amount)));
 
-        if (newBalance <= 0.009f){
+        // If  debt == true (false)
+        if (!Config.DEBT_ENABLED && newBalance <= 0.009f){
             newBalance = 0.00f;
         }
 

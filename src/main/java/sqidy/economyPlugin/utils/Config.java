@@ -9,8 +9,6 @@ import static sqidy.economyPlugin.utils.EconomyUtils.configDir;
 public class Config {
     private static final HashMap<String, HashMap<String, HashMap<String, ?>>> configFile = ConfigHandler.loadConfig(configDir);
 
-    
-
 
     public static final boolean DEBT_ENABLED = Boolean.parseBoolean(String.valueOf(configFile.get("PlayerDebtEnabled")));
 
