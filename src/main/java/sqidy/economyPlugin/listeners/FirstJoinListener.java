@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import sqidy.economyPlugin.EconomyPlugin;
 import sqidy.economyPlugin.handlers.FileHandler;
+import sqidy.economyPlugin.utils.Config;
 
 public class FirstJoinListener implements Listener {
     public FirstJoinListener(EconomyPlugin plugin) {
@@ -21,7 +22,7 @@ public class FirstJoinListener implements Listener {
         String playerName = player.getName();
 
         if (!player.hasPlayedBefore()){
-            FileHandler.modifyAccountData(UUID, playerName, 0.00f, true);
+            FileHandler.modifyAccountData(UUID, playerName, Config.FIRST_JOIN_BALANCE, true);
         }
     }
 }

@@ -5,6 +5,7 @@ import sqidy.economyPlugin.commands.Balance;
 import sqidy.economyPlugin.commands.Pay;
 import sqidy.economyPlugin.handlers.ConfigHandler;
 import sqidy.economyPlugin.handlers.FileHandler;
+import sqidy.economyPlugin.listeners.CraftingListener;
 import sqidy.economyPlugin.listeners.FirstJoinListener;
 import sqidy.economyPlugin.utils.Config;
 
@@ -26,11 +27,11 @@ public final class EconomyPlugin extends JavaPlugin {
 
         // Listeners
         new FirstJoinListener(this);
+        new CraftingListener(this);
 
         //  Handlers
         FileHandler.setup();
-        ConfigHandler.loadConfig(configDir);
-        this.getLogger().info(String.valueOf(Config.ON_PLAYER_DEATH_AMOUNT));
+        this.getLogger().info(Config.PLAYTIME_REQUIRED);
     }
 
     @Override
