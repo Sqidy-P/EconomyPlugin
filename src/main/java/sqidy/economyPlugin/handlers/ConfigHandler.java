@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class ConfigHandler {
+    // Loads config.yml
     public static HashMap<String, HashMap<String, HashMap<String, ?>>> loadConfig(String filePath){
         Yaml yaml = new Yaml();
 

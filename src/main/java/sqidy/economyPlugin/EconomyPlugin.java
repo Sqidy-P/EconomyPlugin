@@ -3,13 +3,9 @@ package sqidy.economyPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import sqidy.economyPlugin.commands.Balance;
 import sqidy.economyPlugin.commands.Pay;
-import sqidy.economyPlugin.handlers.ConfigHandler;
 import sqidy.economyPlugin.handlers.FileHandler;
-import sqidy.economyPlugin.listeners.CraftingListener;
 import sqidy.economyPlugin.listeners.FirstJoinListener;
 import sqidy.economyPlugin.utils.Config;
-
-import static sqidy.economyPlugin.utils.EconomyUtils.configDir;
 
 
 public final class EconomyPlugin extends JavaPlugin {
@@ -27,7 +23,6 @@ public final class EconomyPlugin extends JavaPlugin {
 
         // Listeners
         new FirstJoinListener(this);
-        new CraftingListener(this);
 
         //  Handlers
         FileHandler.setup();

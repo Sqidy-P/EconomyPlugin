@@ -10,15 +10,12 @@ import java.util.HashMap;
 import static sqidy.economyPlugin.utils.EconomyUtils.accountsDir;
 
 public class FileHandler {
-    //region Variables
     public static HashMap<String, HashMap<String, String>> data;
 
     static File directory = new File("./plugins", "EconomyPlugin");
     static File config = new File("./plugins/EconomyPlugin", "config.yml");
     static File accounts = new File("./plugins/EconomyPlugin", "accounts.yml");
-    //endregion
 
-    //region Setup
     public static void setup(){
         createDirectory();
         createFiles();
@@ -27,7 +24,7 @@ public class FileHandler {
     }
 
     private static void createDirectory() {
-        //region Handles creation of EconomyPlugin Directory
+        // Handles creation of EconomyPlugin Directory
         if (!directory.exists()) {
             if (directory.mkdir()) {
                 Bukkit.getLogger().info("Successfully created EconomyPlugin's directory.");
@@ -37,11 +34,10 @@ public class FileHandler {
         } else {
             Bukkit.getLogger().info("The directory for the EconomyPlugin already exists.");
         }
-        //endregion
     }
 
     private static void createFiles() {
-        //region Handles creation of default config.yml
+        // Handles creation of empty config.yml
         if (!config.exists()) {
             try {
                 if (config.createNewFile()) {
@@ -53,9 +49,8 @@ public class FileHandler {
         } else {
             Bukkit.getLogger().info("config.yml already exists.");
         }
-        //endregion
 
-        //region Handles creation of empty accounts.yml
+        // Handles creation of empty accounts.yml
         if (!accounts.exists()) {
             try {
                 if (accounts.createNewFile()) {
@@ -67,14 +62,11 @@ public class FileHandler {
         } else {
             Bukkit.getLogger().info("accounts.yml already exists.");
         }
-        //endregion
     }
-    //endregion
 
     
-
+    // Loads YAML
     public static HashMap<String, HashMap<String, String>> loadDataFromYAML(String filePath){
-        //region Returns the info in yml file.
         Yaml yaml = new Yaml();
 
         try (FileInputStream inputStream = new FileInputStream(filePath)){
@@ -82,28 +74,23 @@ public class FileHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //endregion
     }
 
+    // Writes to accounts.yml
     public static void modifyAccountData(String uuid, String playerName, float balance, boolean appendAccount){
-        //region Check for append
         if (!appendAccount){
             data = loadDataFromYAML(accountsDir);
         } else {
             data = new HashMap<>();
         }
-        //endregion
 
-        //region The data of the UUID
         HashMap<String, String> playerData = new HashMap<>();
 
         playerData.put("player", playerName);
         playerData.put("balance", String.valueOf(balance));
 
         data.put(uuid, playerData);
-        //endregion
 
-        //region Write it to accounts.yml
         DumperOptions options = new DumperOptions();
         options.setIndent(2);
         options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
@@ -115,6 +102,5 @@ public class FileHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //endregion
     }
 }
